@@ -1,0 +1,43 @@
+{
+  "Projects": {
+    "Project_1": {
+      "title": "Residential drain repair in Oakville",
+      "date": "2021-08-12",
+      "job_type": "Drain repair",
+      "description": "Drain repair and washroom finishing in Oakville",
+      "address": {
+        "city": "Oakville",
+        "street": "Trafalgar Rd",
+        "postal_code": "L6H0H3",
+        "lat": "43.4664212",
+        "lng": "-79.690664"
+      }
+    },
+    "Project_2": {
+      "title": "Commercial Backwater valve installation in Milton",
+      "date": "2020-05-10",
+      "job_type": "Backwater valve installation",
+      "description": "Backwater valve installation on commercial site for X-company inc.",
+      "address": {
+        "city": "Milton",
+        "street": "22 Ontario St S",
+        "postal_code": "L9T2M6",
+        "lat": "43.5176813",
+        "lng": "-79.8792867"
+      }
+    },
+    "Project_3": {
+      "title": "Markham Job",
+      "date": "2020-05-10",
+      "job_type": "Backwater valve installation",
+      "description": "Backwater valve installation on commercial site for X-company inc.",
+      "address": {
+        "city": "Markham",
+        "street": "8 Glenmaple Ct",
+        "postal_code": "L6C1G5",
+        "lat": "43.88323953587864",
+        "lng": "-79.3389121904699"
+      }
+    }
+  }
+}

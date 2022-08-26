@@ -1,0 +1,27 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: sans-serif;
+}
+
+.projects-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.project {
+  padding: 1.2rem;
+}
+
+#map {
+  height: 380px;
+  width: 80vw;
+  margin: 0 auto;
+}
