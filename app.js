@@ -65,11 +65,16 @@ if (navigator.geolocation)
     }
   );
 
+// slider
 const slider = document.querySelector(".slider");
 let output = document.getElementById("value");
 
-output.innerHTML = slider.value;
+output.innerHTML = `${slider.value} km`;
 
 slider.addEventListener("input", function () {
-  output.innerHTML = this.value;
+  output.innerHTML = `${this.value} km`;
+
+  var x = slider.value;
+  var color = `linear-gradient(90deg, rgb(117,252,117) ${x}%, rgb(214,214,214) ${x}%)`;
+  slider.style.background = color;
 });
