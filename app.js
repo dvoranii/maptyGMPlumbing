@@ -1,9 +1,8 @@
 // Step 1: fetch API call for projects.json
 
-const projectsContainer = document.querySelector(".projects-container");
+// const projectsContainer = document.querySelector(".projects-container");
 let template = "";
-
-const getProjects = function (url, map) {
+const getProjects = function (url, map, latitude, longitude) {
   fetch(url)
     .then((res) => {
       return res.json();
@@ -11,27 +10,44 @@ const getProjects = function (url, map) {
     .then((data) => {
       let projArr = Object.entries(data.Projects);
       projArr.forEach((project) => {
+        // console.log(latitude - project[1].address.lat);
+        // console.log(project[1].address.lat);
         template = `<div class="project">
                         <h2 class="project-title">${project[1].title}</h2>
                         <div class="project-date">${project[1].date}</div>
                         <div class="project-address">
                             <p>${project[1].address.street} 
                             ${project[1].address.city}, ON 
-                            ${project[1].address.postal_code}<br>
-                            ${project[1].address.lat}
-                            ${project[1].address.lng}
+                            ${project[1].address.postal_code}
                             </p>
                         </div>
                         <div class="project-description">${project[1].description}</div>
                     </div>`;
-        projectsContainer.insertAdjacentHTML("beforeend", template);
-        setMarkers(map, project[1].address.lat, project[1].address.lng);
+        // if (latitude - project[1].address.lat < 0.1) {
+        setMarkers(
+          map,
+          project[1].address.lat,
+          project[1].address.lng,
+          template
+        );
+        // }
       });
     })
     .catch((err) => console.error(err));
 };
 
-// const setView = function () {
+const setMarkers = function (map, latitude, longitude, template = "") {
+  var marker = L.marker([latitude, longitude]).addTo(map);
+  if (template === "") {
+    document.querySelector(".leaflet-marker-icon").src = "/placeholder.png";
+    marker.bindPopup("Your location").openPopup();
+  }
+
+  marker.addEventListener("mouseover", function () {
+    marker.bindPopup(template).openPopup();
+  });
+};
+
 if (navigator.geolocation)
   navigator.geolocation.getCurrentPosition(
     function (position) {
@@ -40,37 +56,20 @@ if (navigator.geolocation)
       L.tileLayer(
         "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
       ).addTo(map);
+      setMarkers(map, latitude, longitude);
 
-      getProjects("/projects.json", map);
-      //   hover state
-      //   marker.addEventListener("mouseout", function () {
-      //     marker.closePopup();
-      //   });
+      getProjects("/projects.json", map, latitude, longitude);
     },
     function () {
       alert("Could not get your position");
     }
   );
-// };
 
-const setMarkers = function (map, latitude, longitude) {
-  var marker = L.marker([latitude, longitude]).addTo(map);
-  marker.addEventListener("mouseover", function () {
-    marker
-      .bindPopup(
-        "This is a popup<br><a href='https://www.google.ca' target='_blank'>See project</a>"
-      )
-      .openPopup();
-  });
-};
+const slider = document.querySelector(".slider");
+let output = document.getElementById("value");
 
-// setView();
-// Step 2: use geolocation api to be able to add projects to Map
+output.innerHTML = slider.value;
 
-//   Leaflet
-
-// Look into how to set radius to show more of map (might be too hard)
-
-// need to set the users view using navigation.geolocation
-// use the geolocation lat and lng to subtract value from the project lat and lng
-// if the difference is > a certain radius, display the markers
+slider.addEventListener("input", function () {
+  output.innerHTML = this.value;
+});
